@@ -60,9 +60,9 @@ pub fn development_config() -> ChainSpec {
 
 	ChainSpec::from_genesis(
 		// Name
-		"Rococo Testnet",
+		"Development",
 		// ID
-		"roc",
+		"dev",
 		ChainType::Development,
 		move || {
 			testnet_genesis(
@@ -92,7 +92,7 @@ pub fn development_config() -> ChainSpec {
 		None,
 		None,
 		None,
-		None,
+		Some(properties),
 		Extensions {
 			relay_chain: "rococo".into(), // You MUST set this to the correct network!
 			para_id: 2000,

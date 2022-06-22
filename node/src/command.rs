@@ -120,10 +120,7 @@ macro_rules! construct_async_run {
 	(|$components:ident, $cli:ident, $cmd:ident, $config:ident| $( $code:tt )* ) => {{
 		let runner = $cli.create_runner($cmd)?;
 		runner.async_run(|$config| {
-			let $components = new_partial::<
-				RuntimeApi,
-				TemplateRuntimeExecutor,
-			>(
+			let $components = new_partial(
 				// We default to the non-parachain import queue and select chain.
 				&$config, false,
 			)?;
@@ -247,12 +244,12 @@ pub fn run() -> Result<()> {
 				}
 				BenchmarkCmd::Block(cmd) => runner.sync_run(|config| {
 					let partials =
-						new_partial::<RuntimeApi, TemplateRuntimeExecutor>(&config, false)?;
+						new_partial(&config, false)?;
 					cmd.run(partials.client)
 				}),
 				BenchmarkCmd::Storage(cmd) => runner.sync_run(|config| {
 					let partials =
-						new_partial::<RuntimeApi, TemplateRuntimeExecutor>(&config, false)?;
+						new_partial(&config, false)?;
 					let db = partials.backend.expose_db();
 					let storage = partials.backend.expose_storage();
 
